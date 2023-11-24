@@ -9,17 +9,24 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
 const User = require("./user");
+require('dotenv').config();
+
+
+const mongo_user = process.env.MONGO_USER
+const mongo_password = process.env.MONGO_PASSWORD
+
+
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
-  "mongodb+srv://{Place Your Username Here!}:{Place Your Password Here!}@cluster0-q9g9s.mongodb.net/test?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("Mongoose Is Connected");
-  }
-);
+  "mongodb+srv://"+mongo_user+":"+mongo_password+"@cluster0.wkgm20f.mongodb.net/test?retryWrites=true&w=majority",
+ )
+  .then(() => {
+    console.log("Mongoose is connected");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
+
 
 // Middleware
 app.use(bodyParser.json());
@@ -58,22 +65,32 @@ app.post("/login", (req, res, next) => {
     }
   })(req, res, next);
 });
-app.post("/register", (req, res) => {
-  User.findOne({ username: req.body.username }, async (err, doc) => {
-    if (err) throw err;
-    if (doc) res.send("User Already Exists");
-    if (!doc) {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      const newUser = new User({
-        username: req.body.username,
-        password: hashedPassword,
-      });
-      await newUser.save();
-      res.send("User Created");
+app.post("/register", async (req, res) => {   
+  try {
+    const existingUser = await User.findOne({ username: req.body.username });
+
+    if (existingUser) {
+      return res.send("User Already Exists");
     }
-  });
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const newUser = new User({
+      username: req.body.username,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+    res.send("User Created");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
+
+
+
 app.get("/user", (req, res) => {
   res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
