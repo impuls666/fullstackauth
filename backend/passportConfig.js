@@ -53,27 +53,16 @@ function configurePassport(passport) {
         if (error.name === 'TokenExpiredError') {
           return done(null, false, { message: 'Token has expired' });
         }
+
+        if (error instanceof SyntaxError || error.name === 'JsonWebTokenError') {
+          return done(null, false, { message: 'Invalid JSON in token' });
+        }
   
         // Handle other errors
         return done(error);
       }
     })
   );
-  
-
-  // Serialization and deserialization
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await User.findById(id);
-      done(null, user);
-    } catch (error) {
-      done(error);
-    }
-  });
 }
 
 module.exports = configurePassport;

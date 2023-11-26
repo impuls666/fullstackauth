@@ -91,8 +91,9 @@ app.get(
   passport.authenticate('bearer', { session: false }), 
   
   (req, res) => {
-    res.json({ message: 'This is a protected route.', user: req.username });
-    
+    res.json({ message: 'This is a protected route.', user: req.user });
+    console.log(req);
+
   }
 );
 
