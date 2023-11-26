@@ -2,15 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+
 require('dotenv').config();
 
 const User = require('./models/user');
+const Tajnedata = require('./models/Tajnedata');
+const movie = require('./models/movie');
+
 const configurePassport = require('./passportConfig');
 
 const app = express();
@@ -72,7 +74,7 @@ app.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const newUser = await new User({
+    const newUser = new User({
       username: req.body.username,
       password: hashedPassword,
     });
@@ -90,10 +92,12 @@ app.get(
   '/protected',
   passport.authenticate('bearer', { session: false }), 
   
-  (req, res) => {
-    res.json({ message: 'This is a protected route.', user: req.user });
-    console.log(req);
+  async (req, res) => {
+    const data = await Tajnedata.find()      
+    const data2 = await movie.find({},'title').limit(10)
+    res.json({ message: 'This is a protected route.', user: req.user, data:data, data2:data2 });    
 
+    
   }
 );
 
