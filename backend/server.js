@@ -19,6 +19,8 @@ const PORT = 4000;
 const mongo_user = process.env.MONGO_USER;
 const mongo_password = process.env.MONGO_PASSWORD;
 const secretKey = process.env.SECRET_KEY;
+const cors_domain = process.env.CORS;
+const secure_cookie = process.env.SECURE_COOKIE;
 
 mongoose
   .connect(`mongodb+srv://${mongo_user}:${mongo_password}@cluster0.wkgm20f.mongodb.net/test?retryWrites=true&w=majority`)
@@ -30,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: cors_domain,
     credentials: true,
   })
 )
@@ -54,11 +56,16 @@ app.post('/login', (req, res, next) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign({ userId: user._id, username: user.username }, secretKey);
 
-    return res.json({ token: `Bearer ${token}`, message: 'Successfully Authenticated' });
+    //return res.json({ token: `Bearer ${token}`, message: 'Successfully Authenticated' });
+    res.cookie("api-auth",token,{
+      secure:secure_cookie,
+      httpOnly:true,
+      sameSite:true,
+      expires: new Date(Date.now() + 900000) 
+    });
+    res.json({ token: `Bearer ${token}`, message: 'Successfully Authenticated' });
   })(req, res, next);
 });
 

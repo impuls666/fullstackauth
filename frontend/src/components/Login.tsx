@@ -1,9 +1,14 @@
 // src/components/Login.tsx
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { Navigate } from "react-router-dom";
 
 interface FormData {
   username: string;
   password: string;
+}
+
+interface ApiResponse {
+  token: string;
 }
 
 const Login: React.FC = () => {
@@ -20,10 +25,37 @@ const Login: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add logic to handle form submission, e.g., make an API call to your login endpoint
     console.log("Login form submitted:", formData);
+    try {
+      const response = await fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data: ApiResponse = await response.json();
+      const { token } = data;
+
+      // Save the token in your application state or localStorage
+      console.log("Bearer Token:", token);
+      Navigate("dashboard");
+      // Example of saving to localStorage
+
+      // Redirect or perform other actions after successful login
+    } catch (error: any) {
+      console.error("Login error:", error.message);
+      // Handle login error, e.g., show an error message to the user
+    }
   };
 
   return (
