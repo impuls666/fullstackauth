@@ -58,7 +58,7 @@ passport.use(
     {
       jwtFromRequest: cookieExtractor,
       secretOrKey: secretKey,
-      maxAge: "7d",
+      maxAge: new Date(Date.now() + 900000),
       passReqToCallback: true,
     },
     async function (req, jwtPayload, done) {
