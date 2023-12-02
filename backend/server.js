@@ -11,8 +11,6 @@ require('dotenv').config();
 
 const User = require('./models/user');
 const Tajnedata = require('./models/Tajnedata');
-const movie = require('./models/movie');
-
 const configurePassport = require('./passportConfig');
 
 const app = express();
@@ -94,8 +92,7 @@ app.get(
   
   async (req, res) => {
     const data = await Tajnedata.find()      
-    const data2 = await movie.find({},'title').limit(10)
-    res.json({ message: 'This is a protected route.', user: req.user, data:data, data2:data2 });    
+    res.json({ message: 'This is a protected route.', user: req.user, data:data });    
 
     
   }

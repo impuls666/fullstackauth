@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const secretKey = process.env.SECRET_KEY;
 
 function configurePassport(passport) {
+  console.log("passport");
   // Local Strategy
   passport.use(
     new LocalStrategy(async (username, password, done) => {
