@@ -1,6 +1,5 @@
 // src/components/Login.tsx
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Navigate } from "react-router-dom";
 
 interface FormData {
   username: string;
@@ -27,6 +26,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     // Add logic to handle form submission, e.g., make an API call to your login endpoint
     console.log("Login form submitted:", formData);
     try {
@@ -48,7 +48,7 @@ const Login: React.FC = () => {
 
       // Save the token in your application state or localStorage
       console.log("Bearer Token:", token);
-      Navigate("dashboard");
+
       // Example of saving to localStorage
 
       // Redirect or perform other actions after successful login

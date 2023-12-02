@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const cookieParser = require("cookie-parser");
 
 
 require('dotenv').config();
@@ -36,6 +37,7 @@ app.use(
     credentials: true,
   })
 )
+app.use(cookieParser());
 
 
 
@@ -62,10 +64,11 @@ app.post('/login', (req, res, next) => {
     res.cookie("api-auth",token,{
       secure:secure_cookie,
       httpOnly:true,
-      sameSite:true,
+      sameSite:'None',
+    
       expires: new Date(Date.now() + 900000) 
     });
-    res.json({ token: `Bearer ${token}`, message: 'Successfully Authenticated' });
+    res.json({ message: 'Successfully Authenticated' });
   })(req, res, next);
 });
 
@@ -102,6 +105,16 @@ app.get(
     res.json({ message: 'This is a protected route.', user: req.user, data:data });    
 
     
+  }
+);
+
+app.get(
+  "/checkAuth",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const user = req.user;
+    user.password = undefined;
+    res.json({ message: "You're Logged in!", user });
   }
 );
 
