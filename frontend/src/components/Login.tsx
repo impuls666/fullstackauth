@@ -1,16 +1,14 @@
 // src/components/Login.tsx
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   username: string;
   password: string;
 }
 
-interface ApiResponse {
-  token: string;
-}
-
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
@@ -43,11 +41,9 @@ const Login: React.FC = () => {
         throw new Error("Login failed");
       }
 
-      const data: ApiResponse = await response.json();
-      const { token } = data;
+      navigate("/dashboard");
 
       // Save the token in your application state or localStorage
-      console.log("Bearer Token:", token);
 
       // Example of saving to localStorage
 
