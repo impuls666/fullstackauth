@@ -1,4 +1,20 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 function Table() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/users");
+        // Assuming the API response is an array of objects with a 'username' key
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">

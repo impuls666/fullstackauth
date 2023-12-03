@@ -64,8 +64,7 @@ passport.use(
     async function (req, jwtPayload, done) {
 
       return User.findOne({ username: jwtPayload.username })
-        .then(async (user) => {
-    
+        .then(async (user) => {    
           if (user) {
             done(null, user);
           } else {

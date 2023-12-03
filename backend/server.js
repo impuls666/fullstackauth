@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cookieParser = require("cookie-parser");
@@ -8,6 +7,7 @@ const mongooseConnection = require('./config/mongoose');
 const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 const configurePassport = require('./passportConfig');
+const Users = require('./models/user');
 const app = express();
 const PORT = 4000;
 
@@ -43,6 +43,20 @@ app.get(
     res.json({ message: "You're Logged in!", user });
   }
 );
+
+app.get(
+  "/users",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const data = await Users.find().select('-password')
+    const user = req.user;
+    user.password = undefined;
+    
+    res.json({ message: "You're Logged in!", user, data });
+  }
+);
+
+
 
 // Start Server
 app.listen(PORT, () => {

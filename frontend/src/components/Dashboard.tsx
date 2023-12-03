@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Table from "./Table";
+import { ThemeProvider } from "./theme-provider";
+import { ModeToggle } from "./mode-toggle";
 
 function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -37,8 +38,11 @@ function Dashboard() {
 
   return (
     <>
-      <Navbar />
-      <Sidebar />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Navbar />
+        <ModeToggle />
+        <Sidebar />
+      </ThemeProvider>
     </>
   );
 }
