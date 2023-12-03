@@ -4,14 +4,11 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
-const secretKey = process.env.SECRET_KEY;
-const secure_cookie = process.env.SECURE_COOKIE;
-
 const router = express.Router();
-
-
 // login route
 router.post('/login', (req, res, next) => {
+const secretKey = process.env.SECRET_KEY;
+const secure_cookie = process.env.SECURE_COOKIE;
     passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err) {
         return next(err);

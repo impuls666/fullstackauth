@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     // Add logic to handle form submission, e.g., make an API call to your login endpoint
     console.log("Login form submitted:", formData);
     try {
-      const response = await fetch("http://localhost:4000/login", {
+      const response = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Table from "./Table";
 
 function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -26,13 +29,18 @@ function Dashboard() {
         navigate("/login");
         throw new Error("Login failed");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error.message);
       navigate("/login");
     }
   };
 
-  return <div>Dashboard</div>;
+  return (
+    <>
+      <Navbar />
+      <Sidebar />
+    </>
+  );
 }
 
 export default Dashboard;
