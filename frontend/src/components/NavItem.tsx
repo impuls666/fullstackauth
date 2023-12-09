@@ -1,4 +1,13 @@
-import { Flex, Text, Icon, Link, Menu, MenuButton } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Icon,
+  Link as ChakraLink,
+  Menu,
+  MenuButton,
+} from "@chakra-ui/react";
+
+import { Link as ReactRouterLink } from "react-router-dom";
 
 interface NavItemProps {
   icon: React.ElementType;
@@ -24,13 +33,14 @@ const NavItem: React.FC<NavItemProps> = ({
       alignItems={navSize === "small" ? "center" : "flex-start"}
     >
       <Menu placement="right">
-        <Link
+        <ChakraLink
+          as={ReactRouterLink}
           backgroundColor={active ? "#AEC8CA" : undefined}
           p={3}
           borderRadius={8}
           _hover={{ textDecor: "none", backgroundColor: "#AEC8CA" }}
           w={navSize === "large" ? "100%" : undefined}
-          href={to}
+          to={to}
         >
           <MenuButton w="100%">
             <Flex>
@@ -44,7 +54,7 @@ const NavItem: React.FC<NavItemProps> = ({
               </Text>
             </Flex>
           </MenuButton>
-        </Link>
+        </ChakraLink>
       </Menu>
     </Flex>
   );
