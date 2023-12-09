@@ -2,7 +2,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Alertbox from "./Alertbox";
-import LoginFormContent from "./LoginFormcontent";
+import LoginFormContent from "./LoginFormContent";
 
 interface FormData {
   username: string;
