@@ -56,4 +56,9 @@ const secure_cookie = process.env.SECURE_COOKIE;
     }
   });
 
+  router.post('/logout', (req, res) => {
+    res.clearCookie('api-auth');
+    res.json({ message: 'Logout successful' });
+  });
+
   module.exports = router;

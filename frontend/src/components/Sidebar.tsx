@@ -14,7 +14,7 @@ import {
   FiUser,
   FiDollarSign,
   FiBriefcase,
-  FiSettings,
+  FiLogOut,
 } from "react-icons/fi";
 import { IoPawOutline } from "react-icons/io5";
 import NavItem from "../components/NavItem";
@@ -60,7 +60,12 @@ const Sidebar: React.FC<SidebarProps> = () => {
         <NavItem navSize={navSize} icon={IoPawOutline} title="Animals" />
         <NavItem navSize={navSize} icon={FiDollarSign} title="Stocks" />
         <NavItem navSize={navSize} icon={FiBriefcase} title="Reports" />
-        <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+        <NavItem
+          navSize={navSize}
+          icon={FiLogOut}
+          title="Logout"
+          to="/logout"
+        />
       </Flex>
 
       <Flex

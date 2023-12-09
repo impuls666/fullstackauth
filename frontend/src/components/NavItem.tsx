@@ -6,9 +6,16 @@ interface NavItemProps {
   description?: string;
   active?: boolean;
   navSize: "small" | "large";
+  to?: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, title, active, navSize }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  icon,
+  title,
+  active,
+  navSize,
+  to,
+}) => {
   return (
     <Flex
       mt={30}
@@ -23,6 +30,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, title, active, navSize }) => {
           borderRadius={8}
           _hover={{ textDecor: "none", backgroundColor: "#AEC8CA" }}
           w={navSize === "large" ? "100%" : undefined}
+          href={to}
         >
           <MenuButton w="100%">
             <Flex>

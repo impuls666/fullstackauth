@@ -1,64 +1,23 @@
-// src/components/Login.tsx
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-
-interface FormData {
-  username: string;
-  password: string;
+interface LoginFormContentProps {
+  formData: {
+    username: string;
+    password: string;
+  };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<FormData>({
-    username: "",
-    password: "",
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Add logic to handle form submission, e.g., make an API call to your login endpoint
-    console.log("Login form submitted:", formData);
-    try {
-      const response = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      navigate("/dashboard");
-
-      // Save the token in your application state or localStorage
-
-      // Example of saving to localStorage
-
-      // Redirect or perform other actions after successful login
-    } catch (error: any) {
-      console.error("Login error:", error.message);
-      // Handle login error, e.g., show an error message to the user
-    }
-  };
-
+const LoginFormContent: React.FC<LoginFormContentProps> = ({
+  formData,
+  handleChange,
+  handleSubmit,
+}) => {
   return (
     <div className="flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br">
       <div className="w-full max-w-lg px-10 py-8 mx-auto bg-white border rounded-lg shadow-2xl">
         <form onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4">Login</h2>
+
           <div className="mb-4">
             <label
               htmlFor="username"
@@ -105,4 +64,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginFormContent;

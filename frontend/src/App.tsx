@@ -6,9 +6,10 @@ import {
   Navigate,
 } from "react-router-dom";
 
-//components
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+//pages
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import Logout from "./pages/Logout";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
