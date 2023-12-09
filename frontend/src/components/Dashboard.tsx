@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import { ThemeProvider } from "./theme-provider";
-import { ModeToggle } from "./mode-toggle";
 
 function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -38,11 +35,7 @@ function Dashboard() {
 
   return (
     <>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Navbar />
-        <ModeToggle />
-        <Sidebar />
-      </ThemeProvider>
+      <Sidebar />
     </>
   );
 }
