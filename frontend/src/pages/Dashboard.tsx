@@ -1,17 +1,20 @@
 import { useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
 import { useAuthentication } from "@/hooks/useAuthentication";
+
+import DashboardLayout from "@/layouts/Dashboard";
+import Table from "@/components/Table";
 
 function Dashboard() {
   const authenticated = useAuthentication();
+  //const authenticated = true;
   useEffect(() => {
     console.log("Authenticated:", authenticated);
   }, [authenticated]);
 
   return (
-    <>
-      <Sidebar />
-    </>
+    <DashboardLayout>
+      <Table />
+    </DashboardLayout>
   );
 }
 
