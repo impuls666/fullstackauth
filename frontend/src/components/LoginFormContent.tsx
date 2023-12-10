@@ -14,14 +14,14 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br">
-      <div className="w-full max-w-lg px-10 py-8 mx-auto bg-white border rounded-lg shadow-2xl">
+      <div className="w-full max-w-lg px-10 py-8 mx-auto  bg-white border rounded-lg shadow-2xl dark:bg-gray-900">
         <form onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4">Login</h2>
 
           <div className="mb-4">
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-gray-600 dark:text-white"
             >
               Username
             </label>
@@ -31,14 +31,14 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700"
               required
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-gray-600  dark:text-white"
             >
               Password
             </label>
@@ -48,7 +48,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700"
               required
             />
           </div>

@@ -25,9 +25,8 @@ const secure_cookie = process.env.SECURE_COOKIE;
       res.cookie("api-auth",token,{
         secure:secure_cookie,
         httpOnly:true,
-        sameSite:'None',
-      
-        expires: new Date(Date.now() + 900000) 
+        sameSite:'None',      
+        expires: new Date(Date.now() + 9000000000) 
       });
       res.json({ message: 'Successfully Authenticated' });
     })(req, res, next);

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const useAuthentication = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [data, setData] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export const useAuthentication = () => {
         if (response.status >= 200 && response.status < 300) {
           console.log("response:", response);
           setAuthenticated(true);
+          setData(response.data.user);
         } else {
           setAuthenticated(false);
           setErrorMessage("Login failed");
@@ -34,5 +36,5 @@ export const useAuthentication = () => {
     checkAuth();
   }, [navigate]); // Depend on navigate to avoid missing the latest navigate value
 
-  return { authenticated, errorMessage };
+  return { authenticated, errorMessage, data };
 };
