@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Modal from "./Modal";
+import { Link } from "react-router-dom";
 
 interface User {
   firstname: string;
@@ -8,6 +10,16 @@ interface User {
 
 function Table() {
   const [users, setUsers] = useState<User[]>([]);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,8 +31,8 @@ function Table() {
 
         // Update state with fetched data
         setUsers(response.data.data);
-      } catch (error: any) {
-        console.error("Error fetching data:", error.message);
+      } catch (error: unknown) {
+        console.error("Error fetching data:", (error as Error).message);
       }
     };
 
@@ -154,7 +166,7 @@ function Table() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 font-semibold">
                 <td className="px-6 py-4">{user.firstname}</td>
                 <td className="px-6 py-4">{user.lastname}</td>
                 <td className="px-6 py-4">Developer</td>
@@ -165,20 +177,28 @@ function Table() {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     type="button"
                     data-modal-target="editUserModal"
                     data-modal-show="editUserModal"
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    onClick={() => openEditModal()}
                   >
                     Edit user
-                  </a>
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {isEditModalOpen && (
+          <Modal onClose={closeEditModal}>
+            {/* Your modal content goes here */}
+            <h2>Edit User</h2>
+            {/* Add form or any other content for editing user */}
+          </Modal>
+        )}
       </div>
     </div>
   );
